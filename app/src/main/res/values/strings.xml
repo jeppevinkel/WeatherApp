@@ -2,4 +2,26 @@
     <string name="app_name">WeatherApp</string>
     <string name="temperature">"Temperature: "</string>
     <string name="feels_like">"Feels Like: "</string>
+    <string name="fuzzy_temperature">Fuzzy temperature: </string>
+    <string name="recommended_clothing">Recommended clothing </string>
+    <string name="and">and</string>
+    <string name="frigid">frigid</string>
+    <string name="freezing">freezing</string>
+    <string name="cold">cold</string>
+    <string name="cool">cool</string>
+    <string name="mild">mild</string>
+    <string name="warm">warm</string>
+    <string name="hot">hot</string>
+    <string name="sweltering">sweltering</string>
+    <string name="jacket">jacket</string>
+    <string name="mittens">mittens</string>
+    <string name="scarf">scarf</string>
+    <string name="socks">socks</string>
+    <string name="warm_hat">warm hat</string>
+    <string name="thick_pants">thick pants</string>
+    <string name="jeans">jeans</string>
+    <string name="shorts">shorts</string>
+    <string name="t_shirt">t-shirt</string>
+
+
 </resources>
