@@ -74,8 +74,8 @@ class GpsViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 fusedLocationClient.lastLocation.addOnSuccessListener {
-                    if (_location.value?.latitude == it.latitude && _location.value?.longitude == it.longitude) return@addOnSuccessListener
-                    _location.value = LocationModel(it.latitude, it.longitude)
+                    if (_location.value?.latitude == it?.latitude && _location.value?.longitude == it?.longitude) return@addOnSuccessListener
+                    _location.value = LocationModel(it?.latitude, it?.longitude)
                 }
             }}, 0, 10000)
     }
