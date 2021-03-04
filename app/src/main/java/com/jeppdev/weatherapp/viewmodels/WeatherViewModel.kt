@@ -21,7 +21,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun updateWeather() {
-        val url = "https://api.openweathermap.org/data/2.5/weather?q=Odense&appid=254b060232f8bc0ce1f558683ba8d5dc"
+        val url = "https://api.openweathermap.org/data/2.5/weather?q=Odense,Denmark&appid=254b060232f8bc0ce1f558683ba8d5dc"
 
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
