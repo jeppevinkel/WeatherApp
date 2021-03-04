@@ -7,7 +7,7 @@ import com.google.android.material.internal.ManufacturerUtils
 @Entity(tableName = "Settings")
 class Settings {
     @PrimaryKey
-    var settingsId = 0
+    var settingsId = 1
     //placering (coordinates)
     var lon: Double = 0.0
     var lat: Double = 0.0

@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.jeppdev.weatherapp.database.AppDatabase
 import com.jeppdev.weatherapp.database.WeatherData
 import com.jeppdev.weatherapp.models.WeatherModel
 
@@ -17,7 +18,9 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     //lateinit var model: WeatherModel
     //var currentWeather: WeatherData? = null
 
-    private val weather = MutableLiveData<WeatherModel>()
+    private lateinit var db: AppDatabase
+
+    private val weather = MutableLiveData<WeatherData>()
     val queue = Volley.newRequestQueue(application.applicationContext)
 
     init {
@@ -33,7 +36,12 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 //        }
 //        currentWeather!!.feelsLike = 273.15
 
-        weather.value = WeatherModel(273.15, 273.15, 0)
+//        weather.value = WeatherModel(273.15, 273.15, 0)
+
+        db = AppDatabase.getAppDatabase(application)!!
+
+        weather.value = db.weatherDataDao().getOrCreate()
+        Log.d("WEATHER_LOG", "Initial stored: %s (%s)".format(weather.value?.feelsLike.toString(), weather.value?.weatherId))
     }
 
     fun updateWeather() {
@@ -43,13 +51,12 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             Request.Method.GET, url, null,
             { response ->
                 Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
-                weather.value = WeatherModel(
-                    response.getJSONObject("main").getDouble("temp"),
-                    response.getJSONObject("main").getDouble("feels_like"),
-                    response.getJSONArray("weather").getJSONObject(0).getInt("id")
-                )
 
-                Log.i("WEATHER_LOG", "Temperature: %s, Feels like: %s".format(response.getJSONObject("main").getDouble("temp"), response.getJSONObject("main").getDouble("feels_like")))
+                val weatherData: WeatherData = WeatherData(response.getJSONObject("main").getDouble("feels_like"))
+
+                weather.value = weatherData
+
+                db.weatherDataDao().insertOrUpdate(weatherData)
             },
             { error ->
                 Log.e("WEATHER_LOG", error.toString())
@@ -70,13 +77,11 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 //                currentWeather!!.feelsLike = response.getJSONObject("main").getDouble("feels_like")
 //                model.updateWeather(currentWeather!!)
 
-                weather.value = WeatherModel(
-                    response.getJSONObject("main").getDouble("temp"),
-                    response.getJSONObject("main").getDouble("feels_like"),
-                    response.getJSONArray("weather").getJSONObject(0).getInt("id")
-                )
+                val weatherData: WeatherData = WeatherData(response.getJSONObject("main").getDouble("feels_like"))
 
-                Log.i("WEATHER_LOG", "Temperature: %s, Feels like: %s".format(response.getJSONObject("main").getDouble("temp"), response.getJSONObject("main").getDouble("feels_like")))
+                weather.value = weatherData
+
+                db.weatherDataDao().insertOrUpdate(weatherData)
             },
             { error ->
                 Log.e("WEATHER_LOG", error.toString())
@@ -89,7 +94,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 //    fun getWeather() : WeatherData? {
 //        return currentWeather
 //    }
-    fun getWeather() : LiveData<WeatherModel> {
+    fun getWeather() : LiveData<WeatherData> {
         return weather
     }
 }

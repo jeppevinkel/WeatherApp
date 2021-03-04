@@ -6,12 +6,12 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "WeatherData")
 class WeatherData {
     @PrimaryKey
-    var weatherId = 0
+    var weatherId = 1
     var feelsLike: Double = 0.0
 
     constructor(){}
 
-    constructor(_feelsLike: Double){
+    constructor(_feelsLike: Double) {
         feelsLike = _feelsLike
     }
 

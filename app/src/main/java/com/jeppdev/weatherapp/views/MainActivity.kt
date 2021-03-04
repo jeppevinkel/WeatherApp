@@ -1,5 +1,12 @@
 package com.jeppdev.weatherapp.views
 
+import android.Manifest
+import android.content.Context
+import android.content.IntentSender
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.common.api.ResolvableApiException
 import com.jeppdev.weatherapp.R
 import com.jeppdev.weatherapp.viewmodels.GpsViewModel
 import com.jeppdev.weatherapp.viewmodels.WeatherViewModel
@@ -31,12 +39,12 @@ class MainActivity : AppCompatActivity() {
         locationTextView = findViewById(R.id.location_text)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), 2)
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), gpsViewModel.PERMISSION_ID)
         }
 
        // temperatureTextView.text = "%.2f°C".format(weatherViewModel.getWeather()!!.feelsLike - 273.15)
         weatherViewModel.getWeather().observe(this, { weather ->
-            temperatureTextView.text = "%.2f°C".format(weather.temperature - 273.15)
+//            temperatureTextView.text = "%.2f°C".format(weather.temperature - 273.15)
             feelsLikeTextView.text = "%.2f°C".format(weather.feelsLike - 273.15)
             Log.d("WEATHER_LOG", "Weather changed!")
         })
