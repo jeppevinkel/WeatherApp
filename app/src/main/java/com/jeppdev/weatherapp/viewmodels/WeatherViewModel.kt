@@ -10,13 +10,29 @@ import androidx.lifecycle.ViewModel
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.jeppdev.weatherapp.database.WeatherData
 import com.jeppdev.weatherapp.models.WeatherModel
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
+    //lateinit var model: WeatherModel
+    //var currentWeather: WeatherData? = null
+
     private val weather = MutableLiveData<WeatherModel>()
     val queue = Volley.newRequestQueue(application.applicationContext)
 
     init {
+//        if(currentWeather == null)
+//        {
+//            //Create new weather
+//            val newWeather = model.getWeather()
+//            model.updateWeather(newWeather)
+//            currentWeather = newWeather
+//        } else {
+//            //Get current weather
+//            currentWeather = model.getWeather()
+//        }
+//        currentWeather!!.feelsLike = 273.15
+
         weather.value = WeatherModel(273.15, 273.15, 0)
     }
 
@@ -27,12 +43,15 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             Request.Method.GET, url, null,
             { response ->
                 Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
+
+//                currentWeather!!.feelsLike = response.getJSONObject("main").getDouble("feels_like")
+//                model.updateWeather(currentWeather!!)
+
                 weather.value = WeatherModel(
                     response.getJSONObject("main").getDouble("temp"),
                     response.getJSONObject("main").getDouble("feels_like"),
                     response.getJSONArray("weather").getJSONObject(0).getInt("id")
                 )
-
                 Log.i("WEATHER_LOG", "Temperature: %s, Feels like: %s".format(response.getJSONObject("main").getDouble("temp"), response.getJSONObject("main").getDouble("feels_like")))
             },
             { error ->
@@ -43,6 +62,9 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         queue.add(jsonObjectRequest)
     }
 
+//    fun getWeather() : WeatherData? {
+//        return currentWeather
+//    }
     fun getWeather() : LiveData<WeatherModel> {
         return weather
     }

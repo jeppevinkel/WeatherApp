@@ -20,12 +20,12 @@ class MainActivity : AppCompatActivity() {
         temperatureTextView = findViewById(R.id.temperature_text)
         feelsLikeTextView = findViewById(R.id.feels_like_text)
 
+       // temperatureTextView.text = "%.2f°C".format(weatherViewModel.getWeather()!!.feelsLike - 273.15)
         weatherViewModel.getWeather().observe(this, { weather ->
             temperatureTextView.text = "%.2f°C".format(weather.temperature - 273.15)
             feelsLikeTextView.text = "%.2f°C".format(weather.feelsLike - 273.15)
             Log.d("WEATHER_LOG", "Weather changed!")
         })
-
         weatherViewModel.updateWeather()
     }
 }
