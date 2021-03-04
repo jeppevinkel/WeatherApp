@@ -17,11 +17,35 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     val queue = Volley.newRequestQueue(application.applicationContext)
 
     init {
-        weather.value = WeatherModel(273.15, 273.15, 0)
+        //weather.value = WeatherModel(273.15, 273.15, 0)
+        //updateWeather()
     }
 
     fun updateWeather() {
         val url = "https://api.openweathermap.org/data/2.5/weather?q=Odense,Denmark&appid=254b060232f8bc0ce1f558683ba8d5dc"
+
+        val jsonObjectRequest = JsonObjectRequest(
+            Request.Method.GET, url, null,
+            { response ->
+                Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
+                weather.value = WeatherModel(
+                    response.getJSONObject("main").getDouble("temp"),
+                    response.getJSONObject("main").getDouble("feels_like"),
+                    response.getJSONArray("weather").getJSONObject(0).getInt("id")
+                )
+
+                Log.i("WEATHER_LOG", "Temperature: %s, Feels like: %s".format(response.getJSONObject("main").getDouble("temp"), response.getJSONObject("main").getDouble("feels_like")))
+            },
+            { error ->
+                Log.e("WEATHER_LOG", error.toString())
+            }
+        )
+
+        queue.add(jsonObjectRequest)
+    }
+
+    fun updateWeather(latitude: Double, longitude: Double) {
+        val url = "https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=254b060232f8bc0ce1f558683ba8d5dc"
 
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
