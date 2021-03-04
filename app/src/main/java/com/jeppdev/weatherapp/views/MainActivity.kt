@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             feelsLikeTextView.text = "%.2f°C".format(weather.feelsLike - 273.15)
             Log.d("WEATHER_LOG", "Weather changed!")
         })
-        weatherViewModel.updateWeather()
+        //weatherViewModel.updateWeather()
 
         gpsViewModel.getLocation().observe(this, { location ->
             locationTextView.text = ("Latitude: %s\nLongitude: %s".format(location.latitude, location.longitude))
