@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.jeppdev.weatherapp.R
+import com.jeppdev.weatherapp.viewmodels.FuzzyViweModel
 import com.jeppdev.weatherapp.viewmodels.GpsViewModel
 import com.jeppdev.weatherapp.viewmodels.WeatherViewModel
 
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     private val weatherViewModel: WeatherViewModel by viewModels()
     private val gpsViewModel: GpsViewModel by viewModels()
+    private val fuzzyViewModel: FuzzyViweModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +66,8 @@ class MainActivity : AppCompatActivity() {
 
         //fuzzy test
         weatherViewModel.getWeather().observe(this, { weather ->
-            fuzzyTemperatureTextView.text = weatherViewModel.getFuzzyTemperature(weather.feelsLike - 273.15)
-            recommendedClothTextView.text = weatherViewModel.getClothing(weather.feelsLike - 273.15)
+            fuzzyTemperatureTextView.text = fuzzyViewModel.getFuzzyTemperature(weather.feelsLike - 273.15)
+            recommendedClothTextView.text = fuzzyViewModel.getClothing(weather.feelsLike - 273.15)
         })
 
     }
