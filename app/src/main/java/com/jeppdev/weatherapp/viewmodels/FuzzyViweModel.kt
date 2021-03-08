@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.jeppdev.weatherapp.R
 
 class FuzzyViweModel(application: Application) : AndroidViewModel(application) {
+
     private val fuzzyWeatherValue = arrayOf(
             application.getString(R.string.frigid),
             application.getString(R.string.freezing),
@@ -65,47 +66,49 @@ class FuzzyViweModel(application: Application) : AndroidViewModel(application) {
             //clothing when sweltering
             arrayOf(
                     application.getString(R.string.t_shirt),
-                    application.getString(R.string.jeans)
+                    application.getString(R.string.shorts)
             )
     )
 
+    private val andInString: String = application.getString(R.string.and)
+
     /* here begins fuzzy stuff */
+    private fun getFuzzyIndex(temperature: Double) : Int {
+        if (temperature <= -3.25)
+            return 0 //frigid
+        else if (-3.25 < temperature && temperature <= 3.13)
+            return 1 //freezing
+        else if (3.13 < temperature && temperature <= 7.25)
+            return 2 //cold
+        else if (7.25 < temperature && temperature <= 14.13)
+            return 3 //cool
+        else if (14.13 < temperature && temperature <= 20.75)
+            return 4 //mild
+        else if (20.75 < temperature && temperature <= 26.5)
+            return 5 //warm
+        else if (26.5 < temperature && temperature <= 32)
+            return 6 //hot
+        else if (32 < temperature)
+            return 7 //sweltering
+        else
+            return -1 //error should never reach this point
+    }
 
     fun getClothing(temperature: Double) : String {
         var returnString = ""
-
+        val andString: String = getApplication<Application>().getString(R.string.and)
         val arrayOfClothing = clothing[getFuzzyIndex(temperature)]
         val listSize = arrayOfClothing.size
         for (index in 0 .. listSize-3){
             returnString = returnString + arrayOfClothing[index] + ", "
         }
-        returnString += arrayOfClothing[listSize-2] + " " + "and"  + " " + arrayOfClothing[listSize-1] //skriver and indtil getString virker
+        returnString += arrayOfClothing[listSize-2] + " " + andString + " " + arrayOfClothing[listSize-1]
         return returnString
 
     }
 
     fun getFuzzyTemperature(temperature: Double) : String{
         return fuzzyWeatherValue[getFuzzyIndex(temperature)]
-    }
-
-    private fun getFuzzyIndex(temperature: Double) : Int {
-        if (temperature <= -3.25)
-            return 0
-        else if (-3.25 < temperature && temperature <= 3.13)
-            return 1
-        else if (3.13 < temperature && temperature <= 7.25)
-            return 2
-        else if (7.25 < temperature && temperature <= 14.13)
-            return 3
-        else if (14.13 < temperature && temperature <= 20.75)
-            return 4
-        else if (20.75 < temperature && temperature <= 26.5)
-            return 5
-        else if (26.5 < temperature && temperature <= 32)
-            return 6
-        else if (32 < temperature)
-            return 7
-        else return -1
     }
 
 }
