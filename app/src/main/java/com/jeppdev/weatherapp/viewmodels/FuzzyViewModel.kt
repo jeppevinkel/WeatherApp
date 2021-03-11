@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.jeppdev.weatherapp.R
 
-class FuzzyViweModel(application: Application) : AndroidViewModel(application) {
+class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
 
     private val fuzzyWeatherValue = arrayOf(
             application.getString(R.string.frigid),
@@ -103,6 +103,7 @@ class FuzzyViweModel(application: Application) : AndroidViewModel(application) {
             returnString = returnString + arrayOfClothing[index] + ", "
         }
         returnString += arrayOfClothing[listSize-2] + " " + andString + " " + arrayOfClothing[listSize-1]
+        returnString = returnString.capitalize()
         return returnString
 
     }

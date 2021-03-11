@@ -1,23 +1,16 @@
 package com.jeppdev.weatherapp.views
 
 import android.Manifest
-import android.content.Context
-import android.content.IntentSender
 import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.gms.common.api.ResolvableApiException
 import com.jeppdev.weatherapp.R
-import com.jeppdev.weatherapp.viewmodels.FuzzyViweModel
+import com.jeppdev.weatherapp.viewmodels.FuzzyViewModel
 import com.jeppdev.weatherapp.viewmodels.GpsViewModel
 import com.jeppdev.weatherapp.viewmodels.WeatherViewModel
 
@@ -33,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private val weatherViewModel: WeatherViewModel by viewModels()
     private val gpsViewModel: GpsViewModel by viewModels()
-    private val fuzzyViewModel: FuzzyViweModel by viewModels()
+    private val fuzzyViewModel: FuzzyViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
