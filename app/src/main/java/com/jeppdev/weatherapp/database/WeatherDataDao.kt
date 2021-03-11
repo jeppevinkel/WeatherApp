@@ -7,10 +7,10 @@ import androidx.room.Update
 
 @Dao
 interface WeatherDataDao{
-    @Query("SELECT EXISTS(SELECT * FROM weatherdata where weatherId = 1)")
+    @Query("SELECT EXISTS(SELECT * FROM weatherdata where id = 1)")
     fun exists(): Boolean
 
-    @Query("SELECT * FROM weatherdata where weatherId = 1")
+    @Query("SELECT * FROM weatherdata where id = 1")
     fun getWeatherData(): WeatherData
 
     @Update
@@ -31,7 +31,7 @@ interface WeatherDataDao{
         return if(exists()){
             getWeatherData()
         } else {
-            WeatherData(0.0)
+            WeatherData(0, 0.0)
         }
     }
 

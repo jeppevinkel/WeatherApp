@@ -28,7 +28,8 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         Timer().scheduleAtFixedRate(object : TimerTask() {
             override fun run() {
                 val location = gpsManager.getLocation() ?: return
-                updateWeather(location.latitude, location.longitude)
+//                updateWeather(location.latitude, location.longitude)
+                updateWeather()
             }}, 0, 10000)
     }
 
@@ -40,7 +41,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             { response ->
                 Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
 
-                val weatherData: WeatherData = WeatherData(response.getJSONObject("main").getDouble("feels_like"))
+                val weatherData: WeatherData = WeatherData(response.getJSONObject("weather").getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
 
                 weather.value = weatherData
 
@@ -62,7 +63,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             { response ->
                 Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
 
-                val weatherData: WeatherData = WeatherData(response.getJSONObject("main").getDouble("feels_like"))
+                val weatherData: WeatherData = WeatherData(response.getJSONObject("weather").getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
 
                 weather.value = weatherData
 
