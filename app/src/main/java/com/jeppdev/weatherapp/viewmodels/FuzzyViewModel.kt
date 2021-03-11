@@ -3,9 +3,10 @@ package com.jeppdev.weatherapp.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.jeppdev.weatherapp.R
+import com.jeppdev.weatherapp.database.WeatherData
+import java.lang.StringBuilder
 
 class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
-
     private val fuzzyWeatherValue = arrayOf(
             application.getString(R.string.frigid),
             application.getString(R.string.freezing),
@@ -70,31 +71,113 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
             )
     )
 
-    private val andInString: String = application.getString(R.string.and)
+    //weather id https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
+    private val sunnyConditions = arrayOf(
+            800, //Clear sky
+            801 //Few clouds
+    )
 
-    /* here begins fuzzy stuff */
+    //weather id https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
+    private val rainingConditions = arrayOf(
+//            300, // light intensity drizzle
+//            301, // drizzle
+//            302, // heavy intensity drizzle
+            310, // light intensity drizzle rain
+            311, // drizzle rain
+            312, // heavy intensity drizzle rain
+            302, // shower rain and drizzle
+            310, // heavy shower rain and drizzle
+            311, // shower drizzle
+
+            500, // light rain
+            501, // moderate rain
+            502, // heavy intensity rain
+            503, // very heavy rain
+            504, // extreme rain
+            511, // freezing rain
+            520, // light intensity shower rain
+            521, // shower rain
+            522, // heavy intensity shower rain
+            531 // ragged shower rain
+    )
+
+    //weather id https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2
+    private val hazardousWeather = arrayOf(
+            781, // Tornado
+            771, // Squall
+            762 // volcanic ash recommended procedure https://www.weather.gov/safety/airquality-volcanic-ash
+    )
+
+    /*********************************************************************************************
+     ***************************** here begins fuzzy calculations ********************************
+     ********************************************************************************************/
+
+    fun getFuzzyText(weatherData: WeatherData) : String
+    {
+        val fuzzyText = StringBuilder()
+        var iCanGoOutside = true
+
+        for (i in hazardousWeather)
+            iCanGoOutside = iCanGoOutside && !(i == weatherData.weatherId)
+
+
+        if (iCanGoOutside) {
+            fuzzyText.append(getApplication<Application>().getString(R.string.str_temperature_introduction) + ' ')
+
+            // get weather temperature
+            val fuzzyTemperature = fuzzyWeatherValue[getFuzzyIndex(weatherData.feelsLike - 273.15)]
+            fuzzyText.append(fuzzyTemperature + ". ")
+
+            //get clothing
+            fuzzyText.append(getApplication<Application>().getString(R.string.consider).capitalize() + ' ')
+            fuzzyText.appendLine(getClothing(weatherData.feelsLike - 273.15) + '.')
+
+
+            //get accessories
+            var raining = false
+            var sunny = false
+            for (i in sunnyConditions)
+                sunny = sunny || (i == weatherData.weatherId)
+            for (i in rainingConditions)
+                raining = raining || (i == weatherData.weatherId)
+
+            if (raining)
+                fuzzyText.appendLine(getApplication<Application>().getString(R.string.str_raining_introduction))
+            if (sunny)
+                fuzzyText.appendLine(getApplication<Application>().getString(R.string.str_sunny_introduction))
+
+
+
+        }
+        else
+            fuzzyText.append("It is recommended not to go outside.")
+
+
+        return fuzzyText.toString()
+    }
+
     private fun getFuzzyIndex(temperature: Double) : Int {
-        if (temperature <= -3.25)
-            return 0 //frigid
-        else if (-3.25 < temperature && temperature <= 3.13)
-            return 1 //freezing
-        else if (3.13 < temperature && temperature <= 7.25)
-            return 2 //cold
-        else if (7.25 < temperature && temperature <= 14.13)
-            return 3 //cool
-        else if (14.13 < temperature && temperature <= 20.75)
-            return 4 //mild
-        else if (20.75 < temperature && temperature <= 26.5)
-            return 5 //warm
-        else if (26.5 < temperature && temperature <= 32)
-            return 6 //hot
-        else if (32 < temperature)
-            return 7 //sweltering
+        if (temperature <= -3.25)//frigid
+            return 0
+        else if (-3.25 < temperature && temperature <= 3.13) //freezing
+            return 1
+        else if (3.13 < temperature && temperature <= 7.25) //cold
+            return 2
+        else if (7.25 < temperature && temperature <= 14.13) //cool
+            return 3
+        else if (14.13 < temperature && temperature <= 20.75) //mild
+            return 4
+        else if (20.75 < temperature && temperature <= 26.5) //warm
+            return 5
+        else if (26.5 < temperature && temperature <= 32) //hot
+            return 6
+        else if (32 < temperature) //sweltering
+            return 7
         else
             return -1 //error should never reach this point
     }
 
-    fun getClothing(temperature: Double) : String {
+    private fun getClothing(temperature: Double) : String {
         var returnString = ""
         val andString: String = getApplication<Application>().getString(R.string.and)
         val arrayOfClothing = clothing[getFuzzyIndex(temperature)]
@@ -103,7 +186,7 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
             returnString = returnString + arrayOfClothing[index] + ", "
         }
         returnString += arrayOfClothing[listSize-2] + " " + andString + " " + arrayOfClothing[listSize-1]
-        returnString = returnString.capitalize()
+        returnString = returnString
         return returnString
 
     }
@@ -111,5 +194,6 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
     fun getFuzzyTemperature(temperature: Double) : String{
         return fuzzyWeatherValue[getFuzzyIndex(temperature)]
     }
+
 
 }

@@ -57,9 +57,12 @@ class MainActivity : AppCompatActivity() {
 
 
         //fuzzy test
+
         weatherViewModel.getWeather().observe(this, { weather ->
-            fuzzyTemperatureTextView.text = fuzzyViewModel.getFuzzyTemperature(weather.feelsLike - 273.15)
-            recommendedClothTextView.text = fuzzyViewModel.getClothing(weather.feelsLike - 273.15)
+            fuzzyTemperatureTextView.text = weather.weatherId.toString()
+//            recommendedClothTextView.text = fuzzyViewModel.getClothing(weather.feelsLike - 273.15)
+
+            recommendedClothTextView.text = fuzzyViewModel.getFuzzyText(weather)
         })
 
     }
