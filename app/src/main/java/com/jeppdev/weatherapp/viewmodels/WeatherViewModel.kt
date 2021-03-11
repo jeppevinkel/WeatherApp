@@ -1,49 +1,35 @@
 package com.jeppdev.weatherapp.viewmodels
 
 import android.app.Application
-import android.content.Context
-import android.content.res.Resources
 import android.util.Log
 import androidx.lifecycle.*
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.jeppdev.weatherapp.GpsManager
 import com.jeppdev.weatherapp.database.WeatherData
-import com.jeppdev.weatherapp.R
 import com.jeppdev.weatherapp.database.AppDatabase
-import com.jeppdev.weatherapp.models.WeatherModel
+import java.util.*
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
-    //lateinit var model: WeatherModel
-    //var currentWeather: WeatherData? = null
-
     private lateinit var db: AppDatabase
+    val gpsManager = GpsManager(application)
 
     private val weather = MutableLiveData<WeatherData>()
-
-
 
     val queue = Volley.newRequestQueue(application.applicationContext)
 
     init {
-//        if(currentWeather == null)
-//        {
-//            //Create new weather
-//            val newWeather = model.getWeather()
-//            model.updateWeather(newWeather)
-//            currentWeather = newWeather
-//        } else {
-//            //Get current weather
-//            currentWeather = model.getWeather()
-//        }
-//        currentWeather!!.feelsLike = 273.15
-
-//        weather.value = WeatherModel(273.15, 273.15, 0)
-
         db = AppDatabase.getAppDatabase(application)!!
 
         weather.value = db.weatherDataDao().getOrCreate()
         Log.d("WEATHER_LOG", "Initial stored: %s (%s)".format(weather.value?.feelsLike.toString(), weather.value?.weatherId))
+
+        Timer().scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
+                val location = gpsManager.getLocation() ?: return
+                updateWeather(location.latitude, location.longitude)
+            }}, 0, 10000)
     }
 
     fun updateWeather() {
@@ -76,9 +62,6 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             { response ->
                 Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
 
-//                currentWeather!!.feelsLike = response.getJSONObject("main").getDouble("feels_like")
-//                model.updateWeather(currentWeather!!)
-
                 val weatherData: WeatherData = WeatherData(response.getJSONObject("main").getDouble("feels_like"))
 
                 weather.value = weatherData
@@ -93,12 +76,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         queue.add(jsonObjectRequest)
     }
 
-//    fun getWeather() : WeatherData? {
-//        return currentWeather
-//    }
     fun getWeather() : LiveData<WeatherData> {
         return weather
     }
-
-
 }
