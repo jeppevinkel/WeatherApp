@@ -23,4 +23,9 @@
     <string name="jeans">jeans</string>
     <string name="shorts">shorts</string>
     <string name="t_shirt">t-shirt</string>
+    <string name="consider">overvej</string>
+    <string name="str_temperature_introduction">Temperaturen i dag er</string>
+    <string name="str_raining_introduction">Da det regner, bør du overveje at tage en paraply eller regnfrakke med dig.</string>
+    <string name="str_sunny_introduction">Da det er solrigt, bør du overveje at medbringe solbriller eller en kasket.</string>
+    <string name="str_warning">Vi anbefaler at blive indendørs.</string>
 </resources>
