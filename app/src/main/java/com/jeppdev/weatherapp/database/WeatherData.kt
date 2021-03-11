@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 class WeatherData {
     @PrimaryKey
     var id = 1
-    var weatherId = 1
+    var weatherId = 0
     var feelsLike: Double = 0.0
 
     constructor(){}

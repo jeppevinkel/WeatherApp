@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [WeatherData::class, Settings::class], version = 1, exportSchema = false)
+@Database(entities = [WeatherData::class, Settings::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun settingsDao() : SettingsDao
     abstract fun weatherDataDao(): WeatherDataDao
@@ -16,6 +16,7 @@ abstract class AppDatabase : RoomDatabase() {
             if(INSTANCE == null){
                 INSTANCE = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "weather-database")
                     .allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
                     .build()
             }
             return INSTANCE

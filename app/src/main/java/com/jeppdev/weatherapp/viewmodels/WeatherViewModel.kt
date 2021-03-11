@@ -9,6 +9,7 @@ import com.android.volley.toolbox.Volley
 import com.jeppdev.weatherapp.GpsManager
 import com.jeppdev.weatherapp.database.WeatherData
 import com.jeppdev.weatherapp.database.AppDatabase
+import org.json.JSONObject
 import java.util.*
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
@@ -41,7 +42,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             { response ->
                 Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
 
-                val weatherData: WeatherData = WeatherData(response.getJSONObject("weather").getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
+                val weatherData: WeatherData = WeatherData(response.getJSONArray("weather").getJSONObject(0).getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
 
                 weather.value = weatherData
 
@@ -63,7 +64,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             { response ->
                 Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
 
-                val weatherData: WeatherData = WeatherData(response.getJSONObject("weather").getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
+                val weatherData: WeatherData = WeatherData(response.getJSONArray("weather").getJSONObject(0).getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
 
                 weather.value = weatherData
 
