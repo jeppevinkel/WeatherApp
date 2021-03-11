@@ -22,6 +22,13 @@
     <string name="jeans">jeans</string>
     <string name="shorts">shorts</string>
     <string name="t_shirt">t-shirt</string>
+    <string name="consider">consider</string>
+    <string name="str_temperature_introduction">The temperature today is</string>
+    <string name="str_raining_introduction">Since it is raining consider to take an umbrella or a raincoat with you.</string>
+    <string name="str_sunny_introduction">Since it is pretty sunny outside consider to bring sunglasses or a cap with you.</string>
+    <string name="str_warning">It is recommended not to go outside.</string>
+
+
 
 
 </resources>
