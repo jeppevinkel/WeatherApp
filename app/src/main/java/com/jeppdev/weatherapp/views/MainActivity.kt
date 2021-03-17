@@ -1,14 +1,17 @@
 package com.jeppdev.weatherapp.views
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jeppdev.weatherapp.R
 import com.jeppdev.weatherapp.viewmodels.FuzzyViewModel
 //import com.jeppdev.weatherapp.viewmodels.GpsViewModel
@@ -29,6 +32,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        val intent = Intent(this, SettingsActivity::class.java)
+//        startActivity(intent)
+
+        findViewById<FloatingActionButton>(R.id.btnOpenSettings).setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+//            Log.d("WEATHER_LOG", "CLICK!!")
+        }
 
         temperatureTextView = findViewById(R.id.temperature_text)
         feelsLikeTextView = findViewById(R.id.feels_like_text)

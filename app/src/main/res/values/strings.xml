@@ -27,8 +27,18 @@
     <string name="str_raining_introduction">Since it is raining consider to take an umbrella or a raincoat with you.</string>
     <string name="str_sunny_introduction">Since it is pretty sunny outside consider to bring sunglasses or a cap with you.</string>
     <string name="str_warning">It is recommended not to go outside.</string>
+    <string name="title_activity_settings">Settings</string>
 
+    <!-- Preference Titles -->
+    <string name="location_header_settings">Location</string>
 
+    <!-- Messages Preferences -->
+    <string name="location_name_title">Location name</string>
+
+    <!-- Sync Preferences -->
+    <string name="manual_location_title">Use manual location</string>
+    <string name="manual_location_summary_on">Use manually input location</string>
+    <string name="manual_location_summary_off">Use GPS based location</string>
 
 
 </resources>

@@ -28,4 +28,10 @@
     <string name="str_raining_introduction">Da det regner, bør du overveje at tage en paraply eller regnfrakke med dig.</string>
     <string name="str_sunny_introduction">Da det er solrigt, bør du overveje at medbringe solbriller eller en kasket.</string>
     <string name="str_warning">Vi anbefaler at blive indendørs.</string>
+    <string name="title_activity_settings">Indstillinger</string>
+    <string name="location_name_title">Placeringsnavn</string>
+    <string name="location_header_settings">Placering</string>
+    <string name="manual_location_title">Brug manuel placering</string>
+    <string name="manual_location_summary_on">Brug valgte placering</string>
+    <string name="manual_location_summary_off">Brug GPS baseret placering</string>
 </resources>

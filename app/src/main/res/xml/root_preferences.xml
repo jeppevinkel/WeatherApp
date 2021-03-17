@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/location_header_settings">
+
+        <SwitchPreferenceCompat
+            app:dependency="location_name"
+            app:key="manual_location"
+            app:summaryOff="@string/manual_location_summary_off"
+            app:summaryOn="@string/manual_location_summary_on"
+            app:title="@string/manual_location_title" />
+        <EditTextPreference
+            app:key="location_name"
+            app:title="@string/location_name_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
