@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.preference.PreferenceManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.jeppdev.weatherapp.R
 import com.jeppdev.weatherapp.viewmodels.FuzzyViewModel
@@ -55,7 +56,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         //fuzzy test
-
         weatherViewModel.getWeather().observe(this, { weather ->
             fuzzyTemperatureTextView.text = weather.weatherId.toString()
 //            recommendedClothTextView.text = fuzzyViewModel.getClothing(weather.feelsLike - 273.15)
