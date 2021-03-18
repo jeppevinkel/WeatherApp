@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.Application
 import android.content.pm.PackageManager
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
@@ -37,9 +38,13 @@ class GpsManager(private val application: Application) {
                     return
                 }
 
+                try {
                 fusedLocationClient.lastLocation.addOnSuccessListener {
                     if (_location?.latitude == it?.latitude && _location?.longitude == it?.longitude) return@addOnSuccessListener
                     _location = LocationModel(it.latitude, it.longitude)
+                }
+                } catch (e: NullPointerException) {
+                    Log.e("WEATHER_LOG", e.toString())
                 }
             }}, 0, 10000)
     }
