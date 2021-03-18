@@ -1,12 +1,18 @@
 package com.jeppdev.weatherapp.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.preference.PreferenceManager
 import com.jeppdev.weatherapp.R
 import com.jeppdev.weatherapp.database.WeatherData
 import java.lang.StringBuilder
 
 class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
+
+    val preferences = PreferenceManager.getDefaultSharedPreferences(application)
+    val resources = application.resources
+
     private val fuzzyWeatherValue = arrayOf(
             application.getString(R.string.frigid),
             application.getString(R.string.freezing),
@@ -118,7 +124,7 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
         var iCanGoOutside = true
 
         for (i in hazardousWeather)
-            iCanGoOutside = iCanGoOutside && !(i == weatherData.weatherId)
+            iCanGoOutside = iCanGoOutside && i != weatherData.weatherId
 
 
         if (iCanGoOutside) {
@@ -126,7 +132,7 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
 
             // get weather temperature
             val fuzzyTemperature = fuzzyWeatherValue[getFuzzyIndex(weatherData.feelsLike - 273.15)]
-            fuzzyText.append(fuzzyTemperature + ". ")
+            fuzzyText.append("$fuzzyTemperature. ")
 
             //get clothing
             fuzzyText.append(getApplication<Application>().getString(R.string.consider).capitalize() + ' ')
@@ -157,24 +163,51 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun getFuzzyIndex(temperature: Double) : Int {
-        if (temperature <= -3.25)//frigid
-            return 0
-        else if (-3.25 < temperature && temperature <= 3.13) //freezing
-            return 1
-        else if (3.13 < temperature && temperature <= 7.25) //cold
-            return 2
-        else if (7.25 < temperature && temperature <= 14.13) //cool
-            return 3
-        else if (14.13 < temperature && temperature <= 20.75) //mild
-            return 4
-        else if (20.75 < temperature && temperature <= 26.5) //warm
-            return 5
-        else if (26.5 < temperature && temperature <= 32) //hot
-            return 6
-        else if (32 < temperature) //sweltering
-            return 7
-        else
-            return -1 //error should never reach this point
+
+        val sensitivity = preferences.getString(resources.getString(R.string.temperature_sensitivity_key), "cold_resistant")
+        when(sensitivity){
+            "heat_resistant" ->{
+                if (temperature <= -3.25)//frigid
+                    return 0
+                else if (-3.25 < temperature && temperature <= 3.13) //freezing
+                    return 1
+                else if (3.13 < temperature && temperature <= 7.25) //cold
+                    return 2
+                else if (7.25 < temperature && temperature <= 14.13) //cool
+                    return 3
+                else if (14.13 < temperature && temperature <= 20.75) //mild
+                    return 4
+                else if (20.75 < temperature && temperature <= 26.5) //warm
+                    return 5
+                else if (26.5 < temperature && temperature <= 32) //hot
+                    return 6
+                else if (32 < temperature) //sweltering
+                    return 7
+                else
+                    return -1 //error should never reach this point
+            }
+            "cold_resistant" ->{
+                if (temperature <= -6)//frigid
+                    return 0
+                else if (-6 < temperature && temperature <= -0.25) //freezing
+                    return 1
+                else if (0.25 < temperature && temperature <= 8.38) //cold
+                    return 2
+                else if (8.38 < temperature && temperature <= 16.75) //cool
+                    return 3
+                else if (16.75 < temperature && temperature <= 22.75) //mild
+                    return 4
+                else if (22.75 < temperature && temperature <= 38.75) //warm
+                    return 5
+                else if (38.75 < temperature && temperature <= 34.75) //hot
+                    return 6
+                else if (34.75 < temperature) //sweltering
+                    return 7
+                else
+                    return -1 //error should never reach this point
+            }
+        }
+        return -1 //error should never reach this point
     }
 
     private fun getClothing(temperature: Double) : String {
@@ -186,7 +219,6 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
             returnString = returnString + arrayOfClothing[index] + ", "
         }
         returnString += arrayOfClothing[listSize-2] + " " + andString + " " + arrayOfClothing[listSize-1]
-        returnString = returnString
         return returnString
 
     }
