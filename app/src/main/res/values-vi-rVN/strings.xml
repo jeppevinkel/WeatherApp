@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">POSCYD</string>
     <string name="temperature">nhiệt độ</string>
     <string name="feels_like">cảm giác như là</string>
     <string name="fuzzy_temperature">Fuzzy temperature</string>

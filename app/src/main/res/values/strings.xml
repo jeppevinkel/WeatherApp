@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeatherApp</string>
+    <string name="app_name">POSCYD</string>
     <string name="temperature">"Temperature: "</string>
     <string name="feels_like">"Feels Like: "</string>
     <string name="fuzzy_temperature">Fuzzy temperature: </string>
