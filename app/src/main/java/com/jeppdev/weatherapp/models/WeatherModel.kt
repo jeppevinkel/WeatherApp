@@ -1,7 +1,5 @@
 package com.jeppdev.weatherapp.models
 
-import com.jeppdev.weatherapp.database.SettingsDao
-import com.jeppdev.weatherapp.database.Settings
 import com.jeppdev.weatherapp.database.WeatherData
 import com.jeppdev.weatherapp.database.WeatherDataDao
 
