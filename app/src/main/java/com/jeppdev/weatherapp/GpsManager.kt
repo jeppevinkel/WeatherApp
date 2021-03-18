@@ -13,7 +13,6 @@ import java.util.*
 class GpsManager(private val application: Application) {
     private var _location: LocationModel? = null
 
-    //    private val context: Context = application
     private var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(application)
     private val PERMISSION_ID = 2
 

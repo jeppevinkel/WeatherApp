@@ -12,9 +12,7 @@ import com.jeppdev.weatherapp.R
 import com.jeppdev.weatherapp.database.WeatherData
 import com.jeppdev.weatherapp.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 import java.util.*
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
@@ -44,14 +42,11 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
                     val location = gpsManager.getLocation() ?: return
                     val locationName = preferences.getString(resources.getString(R.string.location_name_key), "")
                     val useManualLocation = preferences.getBoolean(resources.getString(R.string.manual_location_key), false) && !locationName.isNullOrEmpty()
-//                updateWeather(location.latitude, location.longitude)
 
                     if (useManualLocation) {
                         if (locationName == null) throw NullPointerException("locationName can't be null!")
-//                    Log.d("WEATHER_LOG", "Manual Location Update")
                         updateWeather(locationName)
                     } else {
-//                    Log.d("WEATHER_LOG", "GPS Location Update")
                         updateWeather(location.latitude, location.longitude)
                     }
 

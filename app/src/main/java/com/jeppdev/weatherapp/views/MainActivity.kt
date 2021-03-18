@@ -13,7 +13,6 @@ import com.jeppdev.weatherapp.viewmodels.FuzzyViewModel
 import com.jeppdev.weatherapp.viewmodels.WeatherViewModel
 
 class MainActivity : AppCompatActivity() {
-    val locationPermissionCode = 2
 
     private lateinit var temperatureTextView: TextView
     private lateinit var feelsLikeTextView: TextView
@@ -27,9 +26,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-//        val intent = Intent(this, SettingsActivity::class.java)
-//        startActivity(intent)
 
         temperatureTextView = findViewById(R.id.temperature_text)
         feelsLikeTextView = findViewById(R.id.feels_like_text)
@@ -47,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         //fuzzy test
         weatherViewModel.getWeather().observe(this, { weather ->
             fuzzyTemperatureTextView.text = weather.weatherId.toString()
-//            recommendedClothTextView.text = fuzzyViewModel.getClothing(weather.feelsLike - 273.15)
 
             recommendedClothTextView.text = fuzzyViewModel.getFuzzyText(weather)
         })
