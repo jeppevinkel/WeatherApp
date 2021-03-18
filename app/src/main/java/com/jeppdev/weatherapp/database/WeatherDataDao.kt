@@ -10,6 +10,9 @@ interface WeatherDataDao{
     @Query("SELECT EXISTS(SELECT * FROM weatherdata where id = 1)")
     fun exists(): Boolean
 
+    @Query("SELECT COUNT(*) from weatherdata")
+    fun countWeather(): Int
+
     @Query("SELECT * FROM weatherdata where id = 1")
     fun getWeatherData(): WeatherData
 
@@ -18,21 +21,5 @@ interface WeatherDataDao{
 
     @Insert
     fun insertWeatherData(weatherData: WeatherData)
-
-    fun insertOrUpdate(weatherData: WeatherData){
-        if (exists()){
-            updateWeatherData(weatherData)
-        }else {
-            insertWeatherData(weatherData)
-        }
-    }
-
-    fun getOrCreate(): WeatherData{
-        return if(exists()){
-            getWeatherData()
-        } else {
-            WeatherData(0, 0.0)
-        }
-    }
 
 }

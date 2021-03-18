@@ -6,23 +6,29 @@ import com.google.android.material.internal.ManufacturerUtils
 
 @Entity(tableName = "Settings")
 class Settings {
+    @JvmField
     @PrimaryKey
     var settingsId = 1
+
     //placering (coordinates)
+    @JvmField
     var lon: Double = 0.0
+    @JvmField
     var lat: Double = 0.0
 
     //For at bruge koordinater eller den by man skriver end
+    @JvmField
     var useManualLocation: Boolean = false
 
+    @JvmField
     var cityName: String ?= null
 
-    constructor(){}
-
-    constructor(_lon: Double, _lat: Double, _useManualLocation: Boolean, _cityName: String?){
-        lon = _lon
-        lat = _lat
-        useManualLocation = _useManualLocation
-        cityName = _cityName
-    }
+//    constructor(){}
+//
+//    constructor(_lon: Double, _lat: Double, _useManualLocation: Boolean, _cityName: String?){
+//        lon = _lon
+//        lat = _lat
+//        useManualLocation = _useManualLocation
+//        cityName = _cityName
+//    }
 }

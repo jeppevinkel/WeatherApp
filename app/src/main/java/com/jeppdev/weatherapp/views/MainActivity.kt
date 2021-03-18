@@ -12,7 +12,11 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.lifecycle.ViewModelProvider
 import com.jeppdev.weatherapp.R
+import com.jeppdev.weatherapp.database.AppDatabase
+import com.jeppdev.weatherapp.database.WeatherDataDao
+import com.jeppdev.weatherapp.models.WeatherModel
 import com.jeppdev.weatherapp.viewmodels.FuzzyViewModel
 //import com.jeppdev.weatherapp.viewmodels.GpsViewModel
 import com.jeppdev.weatherapp.viewmodels.WeatherViewModel
@@ -33,6 +37,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val database = AppDatabase.getAppDatabase(this)
+        weatherViewModel.weatherModel = WeatherModel(database!!.weatherDataDao())
+        weatherViewModel.init()
+
 //        val intent = Intent(this, SettingsActivity::class.java)
 //        startActivity(intent)
 
@@ -49,13 +57,16 @@ class MainActivity : AppCompatActivity() {
 
         weatherViewModel.gpsManager.checkPermission(this)
 
+       // temperatureTextView.text = "%.2f°C".format(weatherViewModel.getWeather()!!.feelsLike - 273.15)
         weatherViewModel.getWeather().observe(this, { weather ->
+            temperatureTextView.text = "%.2f°C".format(weather.temperature - 273.15)
             feelsLikeTextView.text = "%.2f°C".format(weather.feelsLike - 273.15)
             Log.d("WEATHER_LOG", "Weather changed! (%.2f°C)".format(weather.feelsLike - 273.15))
         })
+        weatherViewModel.updateWeather()
+
 
         //fuzzy test
-
         weatherViewModel.getWeather().observe(this, { weather ->
             fuzzyTemperatureTextView.text = weather.weatherId.toString()
 //            recommendedClothTextView.text = fuzzyViewModel.getClothing(weather.feelsLike - 273.15)
