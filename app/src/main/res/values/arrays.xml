@@ -13,11 +13,13 @@
     <string-array name="weather_mode_value">
         <item>cold_resistant</item>
         <item>heat_resistant</item>
+        <item>viking</item>
     </string-array>
 
     <string-array name="weather_mode_entries">
         <item>cold resistant</item>
         <item>heat resistant</item>
+        <item>viking</item>
     </string-array>
 
 

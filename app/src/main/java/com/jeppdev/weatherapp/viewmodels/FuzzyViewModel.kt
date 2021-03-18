@@ -206,6 +206,9 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
                 else
                     return -1 //error should never reach this point
             }
+            "viking" ->{
+                return 6 // always hot when you are a viking
+            }
         }
         return -1 //error should never reach this point
     }
