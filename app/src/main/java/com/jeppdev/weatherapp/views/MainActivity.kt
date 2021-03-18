@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         weatherViewModel.getWeather().observe(this, { weather ->
             feelsLikeTextView.text = "%.2f°C".format(weather.feelsLike - 273.15)
-            Log.d("WEATHER_LOG", "Weather changed! (%.2f°C)".format(weather.feelsLike - 273.15))
+            Log.d("WAPP_WEATHER_LOG", "Weather changed! (%.2f°C)".format(weather.feelsLike - 273.15))
         })
 
         //fuzzy test

@@ -29,13 +29,13 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         db = AppDatabase.getAppDatabase(application)!!
 
         weather.value = db.weatherDataDao().getOrCreate()
-        Log.d("WEATHER_LOG", "Initial stored: %s (%s)".format(weather.value?.feelsLike.toString(), weather.value?.weatherId))
+        Log.d("WAPP_WEATHER_LOG", "Initial stored: %s (%s)".format(weather.value?.feelsLike.toString(), weather.value?.weatherId))
 
 
-        Log.d("WEATHER_LOG", "Hello from not coroutine. My thread is: " +
+        Log.d("WAPP_WEATHER_LOG", "Hello from not coroutine. My thread is: " +
                 Thread.currentThread().name)
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d("WEATHER_LOG", "Hello from coroutine. My thread is: " +
+            Log.d("WAPP_WEATHER_LOG", "Hello from coroutine. My thread is: " +
                     Thread.currentThread().name)
             Timer().scheduleAtFixedRate(object : TimerTask() {
                 override fun run() {
@@ -61,7 +61,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
             { response ->
-                Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
+                Log.d("WAPP_WEATHER_LOG", "Response: %s".format(response.toString()))
 
                 val weatherData: WeatherData = WeatherData(response.getJSONArray("weather").getJSONObject(0).getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
 
@@ -70,7 +70,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
                 db.weatherDataDao().insertOrUpdate(weatherData)
             },
             { error ->
-                Log.e("WEATHER_LOG", error.toString())
+                Log.e("WAPP_WEATHER_LOG", error.toString())
             }
         )
 
@@ -83,7 +83,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
             { response ->
-                Log.d("WEATHER_LOG", "Response: %s".format(response.toString()))
+                Log.d("WAPP_WEATHER_LOG", "Response: %s".format(response.toString()))
 
                 val weatherData: WeatherData = WeatherData(response.getJSONArray("weather").getJSONObject(0).getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
 
@@ -92,7 +92,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
                 db.weatherDataDao().insertOrUpdate(weatherData)
             },
             { error ->
-                Log.e("WEATHER_LOG", error.toString())
+                Log.e("WAPP_WEATHER_LOG", error.toString())
             }
         )
 
