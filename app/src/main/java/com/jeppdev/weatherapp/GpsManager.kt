@@ -39,10 +39,10 @@ class GpsManager(private val application: Application) {
                 }
 
                 try {
-                fusedLocationClient.lastLocation.addOnSuccessListener {
-                    if (_location?.latitude == it?.latitude && _location?.longitude == it?.longitude) return@addOnSuccessListener
-                    _location = LocationModel(it.latitude, it.longitude)
-                }
+                    fusedLocationClient.lastLocation.addOnSuccessListener {
+                        if (_location?.latitude == it?.latitude && _location?.longitude == it?.longitude) return@addOnSuccessListener
+                        _location = LocationModel(it.latitude, it.longitude)
+                    }
                 } catch (e: NullPointerException) {
                     Log.e("WEATHER_LOG", e.toString())
                 }
