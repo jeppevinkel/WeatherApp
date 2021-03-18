@@ -16,22 +16,21 @@ interface SettingsDao{
     @Insert
     fun insertSettings(settings: Settings)
 
-//    fun insertOrUpdate(settings: Settings) {
-//        if(exists()){
-//            updateSettings(settings)
-//        } else {
-//            insertSettings(settings)
-//        }
-//    }
-//
-//    fun getOrCreate(): Settings {
-//        return if(exists()) {
-//            getSettings()
-//        } else {
-//
-//            Settings(0.0, 0.0, false, null)
-//        }
-//    }
+    fun insertOrUpdate(settings: Settings) {
+        if(exists()){
+            updateSettings(settings)
+        } else {
+            insertSettings(settings)
+        }
+    }
+
+    fun getOrCreate(): Settings {
+        return if(exists()) {
+            getSettings()
+        } else {
+            Settings(0.0, 0.0, false, null)
+        }
+    }
 
 }
 
