@@ -40,5 +40,9 @@
     <string name="manual_location_summary_on">Use manually input location</string>
     <string name="manual_location_summary_off">Use GPS based location</string>
 
+    <!-- sensitivity preferences -->
+    <string name="heat_resistant">Heat resistant</string>
+    <string name="cold_resistant">Cold resistant</string>
+    <string name="viking">Viking</string>
 
 </resources>

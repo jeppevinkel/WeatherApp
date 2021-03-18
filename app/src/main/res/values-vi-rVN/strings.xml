@@ -34,4 +34,7 @@
     <string name="manual_location_title">Tự chọn vị trí</string>
     <string name="manual_location_summary_on">Sử dụng vị trí đã chọn</string>
     <string name="manual_location_summary_off">Sử dụng vị trí từ GPS</string>
+    <string name="viking">Viking</string>
+    <string name="heat_resistant">Chịu nóng</string>
+    <string name="cold_resistant">Chịu lạnh</string>
 </resources>

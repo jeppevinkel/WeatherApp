@@ -34,4 +34,7 @@
     <string name="manual_location_title">Brug manuel placering</string>
     <string name="manual_location_summary_on">Brug valgte placering</string>
     <string name="manual_location_summary_off">Brug GPS baseret placering</string>
+    <string name="heat_resistant">Varme resistent</string>
+    <string name="cold_resistant">Kulde resistent</string>
+    <string name="viking">Viking</string>
 </resources>
