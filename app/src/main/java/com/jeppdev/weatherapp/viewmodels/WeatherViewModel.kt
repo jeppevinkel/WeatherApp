@@ -18,6 +18,7 @@ import com.jeppdev.weatherapp.database.WeatherData
 import com.jeppdev.weatherapp.database.AppDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
 import java.util.*
 
 class WeatherViewModel(application: Application) : AndroidViewModel(application) {
@@ -63,7 +64,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateWeather(locationName: String) {
-        val url = "https://api.openweathermap.org/data/2.5/weather?q=${locationName}&appid=254b060232f8bc0ce1f558683ba8d5dc"
+        val url = "https://api.openweathermap.org/data/2.5/weather?q=${URLEncoder.encode(locationName)}&appid=254b060232f8bc0ce1f558683ba8d5dc"
 
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
@@ -77,12 +78,12 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
                 val iconUrl = "https://openweathermap.org/img/wn/${iconId}@2x.png"
 
                 val iconRequest = ImageRequest(iconUrl,
-                    Response.Listener {
+                    {
                         Log.d("WAPP_WEATHER_LOG", "Got icon!")
                         weatherData.icon = it
                         weather.value = weatherData
-                    }, 0, 0, null, Bitmap.Config.RGBA_F16, Response.ErrorListener {
-                        Log.d("WAPP_WEATHER_LOG", "Didn't got icon!")
+                    }, 0, 0, null, Bitmap.Config.RGBA_F16, {
+                        Log.e("WAPP_WEATHER_LOG", it.toString())
                     })
 
                 queue.add(iconRequest)
@@ -115,12 +116,12 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
                 val iconUrl = "https://openweathermap.org/img/wn/${iconId}@2x.png"
 
                 val iconRequest = ImageRequest(iconUrl,
-                    Response.Listener {
+                    {
                         Log.d("WAPP_WEATHER_LOG", "Got icon!")
                         weatherData.icon = it
                         weather.value = weatherData
-                    }, 0, 0, null, Bitmap.Config.RGBA_F16, Response.ErrorListener {
-                        Log.d("WAPP_WEATHER_LOG", "Didn't got icon!")
+                    }, 0, 0, null, Bitmap.Config.RGBA_F16, {
+                        Log.e("WAPP_WEATHER_LOG", it.toString())
                     })
 
                 queue.add(iconRequest)

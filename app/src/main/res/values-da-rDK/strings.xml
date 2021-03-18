@@ -37,4 +37,5 @@
     <string name="heat_resistant">Varme resistent</string>
     <string name="cold_resistant">Kulde resistent</string>
     <string name="viking">Viking</string>
+    <string name="weather_icon_content_description">Vejrikon</string>
 </resources>

@@ -44,5 +44,6 @@
     <string name="heat_resistant">Heat resistant</string>
     <string name="cold_resistant">Cold resistant</string>
     <string name="viking">Viking</string>
+    <string name="weather_icon_content_description">Weather Icon</string>
 
 </resources>
