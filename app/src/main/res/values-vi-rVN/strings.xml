@@ -28,4 +28,10 @@
     <string name="str_raining_introduction">Ở ngoài đang mưa, nên đem theo áo mưa hoặc cây vú.</string>
     <string name="str_sunny_introduction">Ở ngoài rất nhiều nắng, nên đem theo mắt kính mát hoặc là nón kết.</string>
     <string name="str_warning">"Hiện giờ không nên đi ra ngoài. "</string>
+    <string name="title_activity_settings">"Cài đặt "</string>
+    <string name="location_header_settings">Vị trí</string>
+    <string name="location_name_title">Tên vị trí</string>
+    <string name="manual_location_title">Tự chọn vị trí</string>
+    <string name="manual_location_summary_on">Sử dụng vị trí đã chọn</string>
+    <string name="manual_location_summary_off">Sử dụng vị trí từ GPS</string>
 </resources>
