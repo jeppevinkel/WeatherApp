@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation">
+    tools:ignore="MissingTranslation"
+    translatable="false">
 
-    <string name="location_name_key">location_name</string>
-    <string name="manual_location_key">manual_location</string>
+    <string name="location_name_key" translatable="false">location_name</string>
+    <string name="manual_location_key" translatable="false">manual_location</string>
 </resources>

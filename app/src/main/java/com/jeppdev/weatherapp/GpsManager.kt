@@ -44,7 +44,7 @@ class GpsManager(private val application: Application) {
                         _location = LocationModel(it.latitude, it.longitude)
                     }
                 } catch (e: NullPointerException) {
-                    Log.e("WEATHER_LOG", e.toString())
+                    Log.e("WAPP_WEATHER_LOG", e.toString())
                 }
             }}, 0, 10000)
     }
