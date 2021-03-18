@@ -11,6 +11,9 @@ import com.jeppdev.weatherapp.GpsManager
 import com.jeppdev.weatherapp.R
 import com.jeppdev.weatherapp.database.WeatherData
 import com.jeppdev.weatherapp.database.AppDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.util.*
 
@@ -30,23 +33,31 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         weather.value = db.weatherDataDao().getOrCreate()
         Log.d("WEATHER_LOG", "Initial stored: %s (%s)".format(weather.value?.feelsLike.toString(), weather.value?.weatherId))
 
-        Timer().scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                val location = gpsManager.getLocation() ?: return
-                val locationName = preferences.getString(resources.getString(R.string.location_name_key), "")
-                val useManualLocation = preferences.getBoolean(resources.getString(R.string.manual_location_key), false) && !locationName.isNullOrEmpty()
+
+        Log.d("WEATHER_LOG", "Hello from not coroutine. My thread is: " +
+                Thread.currentThread().name)
+        viewModelScope.launch(Dispatchers.IO) {
+            Log.d("WEATHER_LOG", "Hello from coroutine. My thread is: " +
+                    Thread.currentThread().name)
+            Timer().scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
+                    val location = gpsManager.getLocation() ?: return
+                    val locationName = preferences.getString(resources.getString(R.string.location_name_key), "")
+                    val useManualLocation = preferences.getBoolean(resources.getString(R.string.manual_location_key), false) && !locationName.isNullOrEmpty()
 //                updateWeather(location.latitude, location.longitude)
 
-                if (useManualLocation) {
-                    if (locationName == null) throw NullPointerException("locationName can't be null!")
+                    if (useManualLocation) {
+                        if (locationName == null) throw NullPointerException("locationName can't be null!")
 //                    Log.d("WEATHER_LOG", "Manual Location Update")
-                    updateWeather(locationName)
-                } else {
+                        updateWeather(locationName)
+                    } else {
 //                    Log.d("WEATHER_LOG", "GPS Location Update")
-                    updateWeather(location.latitude, location.longitude)
-                }
+                        updateWeather(location.latitude, location.longitude)
+                    }
 
-            }}, 0, 10000)
+                }}, 0, 10000)
+
+        }
     }
 
     fun updateWeather(locationName: String) {
