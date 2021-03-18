@@ -1,10 +1,15 @@
 package com.jeppdev.weatherapp.viewmodels
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.*
 import androidx.preference.PreferenceManager
 import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.jeppdev.weatherapp.GpsManager
@@ -38,6 +43,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
             Log.d("WAPP_WEATHER_LOG", "Hello from coroutine. My thread is: " +
                     Thread.currentThread().name)
             Timer().scheduleAtFixedRate(object : TimerTask() {
+                @RequiresApi(Build.VERSION_CODES.O)
                 override fun run() {
                     val location = gpsManager.getLocation() ?: return
                     val locationName = preferences.getString(resources.getString(R.string.location_name_key), "")
@@ -55,6 +61,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun updateWeather(locationName: String) {
         val url = "https://api.openweathermap.org/data/2.5/weather?q=${locationName}&appid=254b060232f8bc0ce1f558683ba8d5dc"
 
@@ -64,6 +71,21 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
                 Log.d("WAPP_WEATHER_LOG", "Response: %s".format(response.toString()))
 
                 val weatherData: WeatherData = WeatherData(response.getJSONArray("weather").getJSONObject(0).getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
+                weatherData.locationName = "${response.getString("name")}, ${response.getJSONObject("sys").getString("country")}"
+
+                val iconId = response.getJSONArray("weather").getJSONObject(0).getString("icon")
+                val iconUrl = "https://openweathermap.org/img/wn/${iconId}@2x.png"
+
+                val iconRequest = ImageRequest(iconUrl,
+                    Response.Listener {
+                        Log.d("WAPP_WEATHER_LOG", "Got icon!")
+                        weatherData.icon = it
+                        weather.value = weatherData
+                    }, 0, 0, null, Bitmap.Config.RGBA_F16, Response.ErrorListener {
+                        Log.d("WAPP_WEATHER_LOG", "Didn't got icon!")
+                    })
+
+                queue.add(iconRequest)
 
                 weather.value = weatherData
 
@@ -77,6 +99,7 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
         queue.add(jsonObjectRequest)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun updateWeather(latitude: Double, longitude: Double) {
         val url = "https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=254b060232f8bc0ce1f558683ba8d5dc"
 
@@ -86,6 +109,21 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
                 Log.d("WAPP_WEATHER_LOG", "Response: %s".format(response.toString()))
 
                 val weatherData: WeatherData = WeatherData(response.getJSONArray("weather").getJSONObject(0).getInt("id"), response.getJSONObject("main").getDouble("feels_like"))
+                weatherData.locationName = "${response.getString("name")}, ${response.getJSONObject("sys").getString("country")}"
+
+                val iconId = response.getJSONArray("weather").getJSONObject(0).getString("icon")
+                val iconUrl = "https://openweathermap.org/img/wn/${iconId}@2x.png"
+
+                val iconRequest = ImageRequest(iconUrl,
+                    Response.Listener {
+                        Log.d("WAPP_WEATHER_LOG", "Got icon!")
+                        weatherData.icon = it
+                        weather.value = weatherData
+                    }, 0, 0, null, Bitmap.Config.RGBA_F16, Response.ErrorListener {
+                        Log.d("WAPP_WEATHER_LOG", "Didn't got icon!")
+                    })
+
+                queue.add(iconRequest)
 
                 weather.value = weatherData
 

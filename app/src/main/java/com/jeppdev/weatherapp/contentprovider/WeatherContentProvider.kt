@@ -10,9 +10,10 @@ import androidx.room.Room
 import com.jeppdev.weatherapp.database.AppDatabase
 import com.jeppdev.weatherapp.database.WeatherDataDao
 
+const val PROVIDER_NAME = "com.jeppdev.weatherapp.provider"
+const val PROVIDER_URL = "content://${PROVIDER_NAME}/weather"
+
 class WeatherContentProvider : ContentProvider() {
-    val PROVIDER_NAME = "com.jeppdev.weatherapp.provider"
-    val PROVIDER_URL = "content://${PROVIDER_NAME}/weather"
     private lateinit var db: AppDatabase
     private var weatherDao: WeatherDataDao? = null
 
@@ -35,10 +36,9 @@ class WeatherContentProvider : ContentProvider() {
     }
 
     override fun insert(uri: Uri, contentValues: ContentValues?): Uri? {
-        Log.d("WAPP_CONTENT_PROVIDER", contentValues.toString())
+//        Log.d("WAPP_CONTENT_PROVIDER", contentValues.toString())
 
         return withAppendedId(uri, 1)
-        TODO("Implement insert")
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
@@ -47,5 +47,9 @@ class WeatherContentProvider : ContentProvider() {
 
     override fun update(uri: Uri, contentValues: ContentValues?, selection: String?, selectionArgs: Array<out String>?): Int {
         TODO("Implement update")
+    }
+
+    companion object {
+        val CONTENT_URI = Uri.parse(PROVIDER_URL)
     }
 }

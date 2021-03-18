@@ -31,7 +31,7 @@ interface WeatherDataDao{
         return if(exists()){
             getWeatherData()
         } else {
-            WeatherData(0, 0.0)
+            WeatherData(0, 273.15)
         }
     }
 

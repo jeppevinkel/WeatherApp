@@ -7,99 +7,38 @@
     tools:context=".views.MainActivity">
 
     <TextView
-        android:id="@+id/fuzzy_temperature_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Temperature id"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/temperature_label"
-        app:layout_constraintEnd_toEndOf="@+id/temperature_label"
-        app:layout_constraintHorizontal_bias="0.212"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
-    <TextView
-        android:id="@+id/location_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Location: "
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/feels_like_label"
-        app:layout_constraintTop_toBottomOf="@+id/feels_like_label" />
-
-    <TextView
-        android:id="@+id/temperature_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/temperature"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
-
-    <TextView
-        android:id="@+id/feels_like_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/feels_like"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/temperature_label"
-        app:layout_constraintTop_toBottomOf="@+id/temperature_label" />
-
-    <TextView
-        android:id="@+id/temperature_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="1dp"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/temperature_label"
-        app:layout_constraintTop_toTopOf="@+id/temperature_label" />
-
-    <TextView
-        android:id="@+id/fuzzy_temperature_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/fuzzy_temperature_label"
-        app:layout_constraintTop_toTopOf="@+id/fuzzy_temperature_label" />
-
-    <TextView
         android:id="@+id/recommended_clothing_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
+        android:textAlignment="center"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageWeatherIcon"
+        app:layout_constraintVertical_bias="0.45" />
+
+    <ImageView
+        android:id="@+id/imageWeatherIcon"
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="128dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
     <TextView
-        android:id="@+id/feels_like_text"
+        android:id="@+id/location_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/feels_like_label"
-        app:layout_constraintTop_toTopOf="@+id/feels_like_label" />
-
-    <TextView
-        android:id="@+id/location_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/location_label"
-        app:layout_constraintStart_toEndOf="@+id/location_label"
-        app:layout_constraintTop_toTopOf="@+id/location_label" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
