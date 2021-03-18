@@ -20,6 +20,8 @@
         android:entries="@array/weather_mode_entries"
         android:entryValues="@array/weather_mode_value"
         android:key="temperature_sensitivity"
-        android:title="Sensitivity preference"/>
+        android:title="Sensitivity preference"
+        android:summary="%s"/>
+
 
 </PreferenceScreen>
