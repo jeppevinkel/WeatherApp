@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recommendedClothTextView: TextView
     private lateinit var weatherIconImageView: ImageView
+    private lateinit var weatherLocationNameTextView: TextView
 
     private val weatherViewModel: WeatherViewModel by viewModels()
     private val fuzzyViewModel: FuzzyViewModel by viewModels()
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         recommendedClothTextView = findViewById(R.id.recommended_clothing_text)
         weatherIconImageView = findViewById(R.id.imageWeatherIcon)
+        weatherLocationNameTextView = findViewById(R.id.location_name_text)
 
         weatherViewModel.gpsManager.checkPermission(this)
 
@@ -50,13 +52,15 @@ class MainActivity : AppCompatActivity() {
         cursor.close()
 
         weatherViewModel.getWeather().observe(this, { weather ->
-            Log.d("WAPP_WEATHER_LOG", "Weather changed! (%.2f°C)".format(weather.feelsLike - 273.15))
+            Log.d("WAPP_WEATHER_LOG", "Weather changed! (%.2f°C), (%s), (%s)".format(weather.feelsLike - 273.15, weather.weatherId, weather.locationName))
         })
 
         //fuzzy test
         weatherViewModel.getWeather().observe(this, { weather ->
 
             recommendedClothTextView.text = fuzzyViewModel.getFuzzyText(weather)
+
+            weatherLocationNameTextView.text = weather.locationName
 
             if (weather.icon != null) {
                 weatherIconImageView.setImageBitmap(weather.icon)
