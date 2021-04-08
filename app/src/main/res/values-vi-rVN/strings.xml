@@ -37,4 +37,6 @@
     <string name="viking">Viking</string>
     <string name="heat_resistant">Chịu nóng</string>
     <string name="cold_resistant">Chịu lạnh</string>
+    <string name="weather_icon_content_description">"Hình "</string>
+    <string name="sensitivity_preference_title">Nhạy cảm nhiệt độ</string>
 </resources>
