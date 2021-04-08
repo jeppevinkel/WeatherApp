@@ -45,5 +45,6 @@
     <string name="cold_resistant">Cold resistant</string>
     <string name="viking">Viking</string>
     <string name="weather_icon_content_description">Weather Icon</string>
+    <string name="sensitivity_preference_title">Sensitivity Preference</string>
 
 </resources>
