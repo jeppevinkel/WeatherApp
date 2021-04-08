@@ -163,7 +163,6 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun getFuzzyIndex(temperature: Double) : Int {
-
         val sensitivity = preferences.getString(resources.getString(R.string.temperature_sensitivity_key), "cold_resistant")
         when(sensitivity){
             "heat_resistant" ->{
@@ -191,7 +190,7 @@ class FuzzyViewModel(application: Application) : AndroidViewModel(application) {
                     return 0
                 else if (-6 < temperature && temperature <= -0.25) //freezing
                     return 1
-                else if (0.25 < temperature && temperature <= 8.38) //cold
+                else if (-0.25 < temperature && temperature <= 8.38) //cold
                     return 2
                 else if (8.38 < temperature && temperature <= 16.75) //cool
                     return 3
